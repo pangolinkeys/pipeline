@@ -1,5 +1,5 @@
-# pipeline
-Repository to provide a simple implementation of the pipeline pattern.
+# php-pipeline
+Repository to provide a simple implementation of the pipeline pattern in PHP.
 
 To use implement the `Pipeline` trait.
 Call `->pipe()` from your class passing a list of objects that implement the `ProvidesPipeline` class.
