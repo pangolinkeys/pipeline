@@ -6,3 +6,11 @@ Call `->pipe()` from your class passing a list of objects that implement the `Pr
 Optionally use `InitializePipeline` helper class to get your values into the pipeline.
 
 See the `Example` folder inside the `tests` folder for a working example.
+
+    return $this->pipe(
+            new InitializePipeline($value),
+            new DivideByTwo,
+            new DivideByTwo,
+            new TimesByOneThousand,
+            new TimesByOneThousand
+    );
