@@ -1,0 +1,27 @@
+{
+  "name": "pangolinkeys/pipe",
+  "description": "Package to provide standardisation to the pipe pattern",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "James Cook",
+      "email": "me@jamesaidancook.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Pangolinkeys\\Pipe\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pangolinkeys\\Pipe\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.3"
+  }
+}
