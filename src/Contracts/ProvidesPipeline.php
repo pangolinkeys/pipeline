@@ -11,4 +11,5 @@ interface ProvidesPipeline
      * @return mixed
      */
     function handle($value);
+
 }

@@ -6,6 +6,9 @@ use Pangolinkeys\Pipe\Contracts\ProvidesPipeline;
 
 class InitializePipeline implements ProvidesPipeline
 {
+    /**
+     * @var
+     */
     protected $value;
 
     /**

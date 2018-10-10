@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 class TestCase extends PHPUnitTestCase
 {
+    /**
+     * @var Main
+     */
     protected $example;
 
     public function setUp()

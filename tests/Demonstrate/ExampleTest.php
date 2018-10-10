@@ -27,4 +27,22 @@ class ExampleTest extends TestCase
     {
         $this->assertContains(Pipeline::class, class_uses($this->example));
     }
+
+    /**
+     * @test
+     */
+    public function test_context_store()
+    {
+        $value = 'askdhaskldhklasj';
+        $this->assertEquals($value, $this->example->useStorage($value));
+    }
+
+    /**
+     * @test
+     * @expectedException Pangolinkeys\Pipe\Exceptions\KeyNotExistsException
+     */
+    public function test_exception_thrown_when_key_doesnt_exist()
+    {
+        $this->example->failStorage();
+    }
 }
