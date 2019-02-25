@@ -14,3 +14,17 @@ See the `Example` folder inside the `tests` folder for a working example.
             new TimesByOneThousand,
             new TimesByOneThousand
     );
+
+## Composer
+To install this package into your composer projects run:
+
+`composer require pangolinkeys/pipe`
+
+## Pipe by class name
+As of v2 you can define a pipeline by reference to the class name and allow the pipeline to handle class instantiation.
+
+    return $this->pipe(
+        new InitializePipeline($value),
+        DivideByTwo::class,
+        TimesByOneThousand::class
+    );
