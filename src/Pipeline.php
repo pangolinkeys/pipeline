@@ -4,6 +4,8 @@ namespace Pangolinkeys\Pipe;
 
 use Pangolinkeys\Pipe\Contracts\ProvidesContextPipeline;
 use Pangolinkeys\Pipe\Contracts\ProvidesPipeline;
+use Pangolinkeys\Pipe\Exceptions\ClassNotInstanceOfProvidePipelineException;
+use Pangolinkeys\Pipe\Exceptions\IncorrectTypePassedToPipeException;
 use Pangolinkeys\Pipe\Exceptions\KeyNotExistsException;
 
 trait Pipeline
@@ -48,13 +50,32 @@ trait Pipeline
     /**
      * Process through the pipeline.
      *
-     * @param ProvidesPipeline ...$pipeline
+     * @param ProvidesPipeline|string ...$pipeline
+     *
      * @return mixed|null
+     * @throws ClassNotInstanceOfProvidePipelineException
+     * @throws IncorrectTypePassedToPipeException
      */
-    protected function pipe(ProvidesPipeline ...$pipeline)
+    protected function pipe(...$pipeline)
     {
         $result = null;
         foreach ($pipeline as $pipe) {
+            if ($this->needsInstantiation($pipe)) {
+                $pipe = new $pipe;
+            }
+
+            if (!is_string($pipe) && !is_object($pipe)) {
+                throw new IncorrectTypePassedToPipeException();
+            }
+
+            if (! $pipe instanceof ProvidesPipeline) {
+                $pipeName = is_object($pipe) ? get_class($pipe) : (string) $pipe;
+
+                throw new ClassNotInstanceOfProvidePipelineException(
+                    $pipeName . ' does not implement ProvidesPipeLine'
+                );
+            }
+
             if ($pipe instanceof ProvidesContextPipeline) {
                 $result = $pipe->handle($result, $this);
             } elseif ($pipe instanceof ProvidesPipeline) {
@@ -63,5 +84,17 @@ trait Pipeline
         }
 
         return $result;
+    }
+
+    /**
+     * Ascertains if the pipeline needs instantiating
+     *
+     * @param $pipeline
+     *
+     * @return bool
+     */
+    protected function needsInstantiation($pipeline): bool
+    {
+        return is_string($pipeline) && class_exists($pipeline);
     }
 }
